@@ -6,6 +6,18 @@ const Reservation = require("./reservation");
 /** Customer of the restaurant. */
 
 class Customer {
+
+  /**
+   * Create a new Customer instance.
+   * 
+   * @param {Object} params - The customer's details.
+   * @param {number} params.id - The unique identifier for the customer.
+   * @param {string} params.firstName - The first name of the customer.
+   * @param {string} params.lastName - The last name of the customer.
+   * @param {string} params.phone - The phone number of the customer.
+   * @param {string} params.notes - Additional notes about the customer.
+   */
+
   constructor({ id, firstName, lastName, phone, notes }) {
     this.id = id;
     this.firstName = firstName;
@@ -14,8 +26,11 @@ class Customer {
     this.notes = notes;
   }
 
-  /** find all customers. */
-
+  /**
+   * Static class method used to retrieve all customers from the database.
+   * 
+   * @returns {Array} An array of new Customer class instances, each representing a customer row from the db.
+   */
   static async all() {
     const results = await db.query(
       `SELECT id, 
@@ -29,8 +44,13 @@ class Customer {
     return results.rows.map(c => new Customer(c));
   }
 
-  /** get a customer by ID. */
-
+  /**
+   * get a customer by their ID.
+   * 
+   * @param {number} id - The unique identifier of the customer to retrieve.
+   * @throws {Error} Throws a 404 error if the customer with a matching id is not found.
+   * @returns {Customer} A new Customer class instance made using the obj retrieved from the db
+   */
   static async get(id) {
     const results = await db.query(
       `SELECT id, 
@@ -52,6 +72,7 @@ class Customer {
 
     return new Customer(customer);
   }
+
 
   /** get all reservations for this customer. */
 
