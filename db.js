@@ -1,6 +1,6 @@
 /** Database for lunchly */
 
-const pg = require("pg");
+const {Client} = require("pg");
 
 const username = process.env.PG_USERNAME;
 const password = process.env.PG_PASSWORD;
