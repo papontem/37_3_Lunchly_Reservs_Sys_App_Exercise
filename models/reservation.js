@@ -38,12 +38,9 @@ class Reservation {
 		return results.rows.map((row) => new Reservation(row));
 	}
 
-	/**TODO save a reservation. */
+	/**save a reservation. */
 
 	async save() {
-		// if the reservation were making doesnt have an id yet,
-		// in which case we are  in a POST route,
-		// lets insert it into our db and give it an id
 		if (this.id === undefined) {
 			const result = await db.query(
 				`
@@ -61,9 +58,6 @@ class Reservation {
 			);
 			this.id = result.rows[0].id;
 		} else {
-			// else the reservation already has an id,
-			// in which case we are in a PUT/PATCH route
-			// and were updating the reservation in the db.
 			await db.query(
 				`
         UPDATE reservations 
