@@ -32,6 +32,7 @@ router.get("/add/", async function(req, res, next) {
 
 router.post("/add/", async function(req, res, next) {
   try {
+    // getting form data from req body
     const firstName = req.body.firstName;
     const lastName = req.body.lastName;
     const phone = req.body.phone;
@@ -89,15 +90,23 @@ router.post("/:id/edit/", async function(req, res, next) {
   }
 });
 
-/** Handle adding a new reservation. */
-
+/**
+ * Handle adding a new reservation.
+ * @route POST /:id/add-reservation
+ * @param {number} req.params.id - The customer's ID.
+ * @param {string} req.body.startAt - The reservation start date and time.
+ * @param {number} req.body.numGuests - The number of guests for the reservation.
+ * @param {string} req.body.notes - Additional notes for the reservation.
+ * @returns {Object} - Redirects to the customer's detail page.
+ * @throws {Error} - If there is an error while adding the reservation.
+ */
 router.post("/:id/add-reservation/", async function(req, res, next) {
   try {
     const customerId = req.params.id;
     const startAt = new Date(req.body.startAt);
     const numGuests = req.body.numGuests;
     const notes = req.body.notes;
-
+    
     const reservation = new Reservation({
       customerId,
       startAt,
